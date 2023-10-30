@@ -1,0 +1,16 @@
+{
+  "name": "version-badge",
+  "version": "0.0.1",
+  "author": "michaelcoll",
+  "license": "Apache 2.0",
+  "homepage": "https://github.com/michaelcoll/version-badge#readme",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1"
+  }
+}
