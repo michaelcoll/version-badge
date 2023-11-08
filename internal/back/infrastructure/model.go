@@ -34,6 +34,7 @@ type EnvParameter struct {
 }
 
 type AppParameter struct {
-	Name string `yaml:"name"`
-	Url  string `yaml:"url"`
+	Name           string `yaml:"name"`
+	Url            string `yaml:"url"`
+	CompareWithEnv string `yaml:"compare-with-env"`
 }

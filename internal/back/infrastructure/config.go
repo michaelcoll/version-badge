@@ -11,8 +11,9 @@ import (
 )
 
 type YamlAppConfig struct {
-	urlMap         map[string]string
-	cacheConfigMap map[string]time.Duration
+	urlMap            map[string]string
+	cacheConfigMap    map[string]time.Duration
+	compareWithEnvMap map[string]string
 }
 
 func NewConfigLoader() YamlAppConfig {
@@ -23,14 +24,16 @@ func NewConfigLoader() YamlAppConfig {
 
 	urlMap := make(map[string]string)
 	cacheConfigMap := make(map[string]time.Duration)
+	compareWithEnvMap := make(map[string]string)
 	for _, env := range parameters.Envs {
 		cacheConfigMap[env.Name] = time.Duration(env.CacheDuration)
 		for _, app := range env.Apps {
 			urlMap[getKey(env.Name, app.Name)] = app.Url
+			compareWithEnvMap[getKey(env.Name, app.Name)] = app.CompareWithEnv
 		}
 	}
 
-	return YamlAppConfig{urlMap: urlMap, cacheConfigMap: cacheConfigMap}
+	return YamlAppConfig{urlMap: urlMap, cacheConfigMap: cacheConfigMap, compareWithEnvMap: compareWithEnvMap}
 }
 
 func getKey(env string, appName string) string {
@@ -62,18 +65,23 @@ func load() (*Parameters, error) {
 	return params, nil
 }
 
-func (c *YamlAppConfig) Get(env string, appName string) (url string, duration time.Duration, err error) {
+func (c *YamlAppConfig) Get(env string, appName string) (url string, duration time.Duration, compareWithEnv string, err error) {
 	url, err = c.getUrl(env, appName)
 	if err != nil {
-		return "", 0, err
+		return "", 0, "", err
 	}
 
 	d, err := c.getCacheDuration(env)
 	if err != nil {
-		return "", 0, err
+		return "", 0, "", err
 	}
 
-	return url, d * time.Second, nil
+	compareWithEnv, err = c.getCompareWithEnv(env, appName)
+	if err != nil {
+		return "", 0, "", err
+	}
+
+	return url, d * time.Second, compareWithEnv, nil
 }
 
 func (c *YamlAppConfig) getUrl(env string, appName string) (url string, err error) {
@@ -89,5 +97,13 @@ func (c *YamlAppConfig) getCacheDuration(env string) (duration time.Duration, er
 		return duration, err
 	} else {
 		return 0, fmt.Errorf("env not found")
+	}
+}
+
+func (c *YamlAppConfig) getCompareWithEnv(env string, appName string) (compareWithEnv string, err error) {
+	if compareWithEnv, found := c.compareWithEnvMap[getKey(env, appName)]; found {
+		return compareWithEnv, err
+	} else {
+		return "", fmt.Errorf("app not found")
 	}
 }

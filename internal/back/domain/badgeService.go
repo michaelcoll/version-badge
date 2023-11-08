@@ -52,6 +52,11 @@ func (s *BadgeService) buildTemplateValues(info *AppInfo, env string, actuatorEr
 		color = Red
 		tag = "DOWN"
 	} else {
+
+		if !info.UpToDate {
+			color = Yellow
+		}
+
 		tag = info.Version
 		if strings.Contains(tag, "SNAPSHOT") {
 			tag = info.CommitSha

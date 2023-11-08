@@ -17,4 +17,5 @@ type TemplateValues struct {
 type AppInfo struct {
 	Version   string
 	CommitSha string
+	UpToDate  bool
 }

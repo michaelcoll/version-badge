@@ -28,7 +28,7 @@ func NewActuatorInfoCaller(config YamlAppConfig) *ActuatorInfoCaller {
 
 func (c *ActuatorInfoCaller) Get(ctx context.Context, env string, appName string) (*domain.AppInfo, error) {
 
-	url, duration, err := c.config.Get(env, appName)
+	url, duration, compareWithEnv, err := c.config.Get(env, appName)
 	if err != nil {
 		return nil, err
 	}
@@ -38,9 +38,27 @@ func (c *ActuatorInfoCaller) Get(ctx context.Context, env string, appName string
 		return nil, err
 	}
 
+	upToDate := true
+	if compareWithEnv != "" {
+		url, duration, _, err := c.config.Get(compareWithEnv, appName)
+		if err != nil {
+			return nil, err
+		}
+
+		otherActuatorInfo, err := c.getInfo(ctx, url, duration)
+		if err != nil {
+			return nil, err
+		}
+
+		if actuatorInfo.Git.Commit.Id != otherActuatorInfo.Git.Commit.Id {
+			upToDate = false
+		}
+	}
+
 	return &domain.AppInfo{
 		Version:   actuatorInfo.Build.Version,
 		CommitSha: actuatorInfo.Git.Commit.Id,
+		UpToDate:  upToDate,
 	}, nil
 }
 
