@@ -1,10 +1,13 @@
 build: build-go ## Build the app
 
-dep-upgrade: dep-upgrade-go ## Upgrades dependencies
+dep-upgrade: dep-upgrade-node dep-upgrade-go ## Upgrades dependencies
 
 dep-upgrade-go:
 	@go get -u
 	@go mod tidy
+
+dep-upgrade-node:
+	npm update --latest
 
 build-go:
 	@go build -v -ldflags="-s -w -X 'github.com/michaelcoll/version-badge/cmd.version=v0.0.0'" .
