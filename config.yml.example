@@ -1,0 +1,17 @@
+envs:
+- name: 'd2'
+  cache-duration-seconds: 60
+  apps:
+  - name: 'truc'
+    url: 'http://localhost:8081/actuator/info'
+  - name: 'machin'
+    url: 'http://localhost:8081/actuator/info'
+- name: 'r2'
+  cache-duration-seconds: 60
+  apps:
+  - name: 'truc'
+    url: 'http://localhost:8082/actuator/info'
+    compare-with-env: 'd2'
+  - name: 'machin'
+    url: 'http://localhost:8082/actuator/info'
+    compare-with-env: 'd2'
