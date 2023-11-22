@@ -16,8 +16,6 @@
 
 package domain
 
-import "fmt"
-
 type ErrorCode int8
 
 const (
@@ -38,10 +36,6 @@ func (e *CodeError) Code() ErrorCode {
 
 func (e *CodeError) Error() string {
 	return e.message
-}
-
-func Errorf(code ErrorCode, format string, a ...interface{}) error {
-	return &CodeError{code, fmt.Sprintf(format, a...)}
 }
 
 func GetCodeFromError(err error) (ErrorCode, bool) {
