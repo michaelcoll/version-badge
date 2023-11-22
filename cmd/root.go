@@ -26,10 +26,10 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "quiz-app",
+	Use:   "version-badge",
 	Short: "",
 	Long: `
-The quiz wep app.`,
+An app that generates version badges for your micro-services.`,
 }
 
 var version = "v0.0.0"
@@ -53,7 +53,7 @@ func init() {
 }
 
 func initConfig() {
-	viper.SetEnvPrefix("quiz")
+	viper.SetEnvPrefix("version-badge")
 	viper.AutomaticEnv() // read in environment variables that match
 	replacer := strings.NewReplacer("-", "_")
 	viper.SetEnvKeyReplacer(replacer)
