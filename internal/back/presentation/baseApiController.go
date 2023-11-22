@@ -48,10 +48,10 @@ func (c *ApiController) Serve() {
 
 	addCommonMiddlewares(router)
 
-	public := router.Group("/api/v1")
+	public := router.Group("/badge")
 	health := router.Group("/health")
 
-	addGetEndpoint(public, "/badge/:env/:app", c.getBadge)
+	addGetEndpoint(public, "/:env/:app", c.getBadge)
 
 	addGetEndpoint(health, "/started", c.started)
 	addGetEndpoint(health, "/ready", c.ready)
