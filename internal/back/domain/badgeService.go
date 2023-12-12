@@ -72,7 +72,11 @@ func (s *BadgeService) buildTemplateValues(info *AppInfo, env string, actuatorEr
 
 func (s *BadgeService) generateBadge(values TemplateValues, wr io.Writer) error {
 	tmplFS, _ := fs.Sub(templates, "templates")
-	t := template.Must(template.ParseFS(tmplFS, "badge.svg.gotmpl"))
+	templateName := "badge-long.svg.gotmpl"
+	if len(values.Tag) < 7 {
+		templateName = "badge-short.svg.gotmpl"
+	}
+	t := template.Must(template.ParseFS(tmplFS, templateName))
 	err := t.Execute(wr, values)
 	if err != nil {
 		return err
