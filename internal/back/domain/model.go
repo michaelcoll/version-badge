@@ -4,7 +4,7 @@ type Color string
 
 const (
 	Green  Color = "#97ca00"
-	Red    Color = "#e05d44"
+	Red    Color = "#fe7d37"
 	Yellow Color = "#dfb317"
 )
 
