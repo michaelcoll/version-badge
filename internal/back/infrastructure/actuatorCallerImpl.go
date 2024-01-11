@@ -93,7 +93,7 @@ func (c *ActuatorInfoCaller) getInfo(ctx context.Context, url string, duration t
 	jsonErr := json.Unmarshal(body, &actuatorInfo)
 	if jsonErr != nil {
 		fmt.Printf("%s Can't unmarshal response from %s\n", color.HiYellowString("i"), url)
-		return nil, err
+		return nil, jsonErr
 	}
 
 	c.c.Set(url, &actuatorInfo, duration)
