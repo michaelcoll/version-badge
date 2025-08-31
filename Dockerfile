@@ -1,4 +1,4 @@
-FROM golang:1 as build-go
+FROM golang:1 AS build-go
 
 ARG BUILDTIME
 ARG VERSION
