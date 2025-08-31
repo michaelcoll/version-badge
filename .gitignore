@@ -8,7 +8,7 @@ config.yml
 version-badge
 internal/back/domain/templates/badge.svg
 node_modules
-
+/coverage.out
 
 # ide
 .idea/*
