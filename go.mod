@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/fatih/color v1.18.0
 	github.com/gin-contrib/gzip v1.0.1
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
