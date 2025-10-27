@@ -6,7 +6,7 @@ toolchain go1.24.4
 
 require (
 	github.com/fatih/color v1.18.0
-	github.com/gin-contrib/gzip v1.2.4
+	github.com/gin-contrib/gzip v1.2.5
 	github.com/gin-gonic/gin v1.11.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/spf13/cobra v1.10.1
